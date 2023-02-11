@@ -1,0 +1,17 @@
+#!/command/with-contenv bash
+
+NAME="unbound"
+s6-echo "Starting $NAME"
+s6-echo "LOCAL IP: $(hostname -I)"
+
+DESC="Server"
+DAEMON="/usr/sbin/unbound"
+PIDFILE="/run/unbound.pid"
+
+test -x /usr/sbin/unbound || exit 0
+
+/usr/lib/unbound/package-helper chroot_setup
+/usr/lib/unbound/package-helper root_trust_anchor_update 2>&1 | logger -p daemon.info -t unbound-anchor
+
+/usr/sbin/unbound -d
+

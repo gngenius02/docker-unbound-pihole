@@ -1,0 +1,34 @@
+version: '3.0'
+
+volumes:
+  etc_pihole-pihole:
+  etc_dnsmasq-pihole:
+
+networks:
+  net:
+    driver: bridge
+
+services:
+  pihole:
+    container_name: pihole
+    image: unboundpihole:latest
+    expose:
+      - 443/tcp
+      - 53/tcp
+      - 53/udp
+      - 80/tcp
+    environment:
+      - TZ=America/Phoenix
+      - WEBPASSWORD=${WEBPASSWORD}
+      - WEBTHEME=default-dark
+      - REV_SERVER=false
+      - PIHOLE_DNS_=127.0.0.1#5335
+      - DNSSEC=false
+      - CUSTOM_CACHE_SIZE=0
+      - DNSMASQ_LISTENING=all
+    volumes:
+      - etc_pihole-ph:/etc/pihole:rw
+      - etc_dnsmasq-ph:/etc/dnsmasq.d:rw
+    networks:
+      - net
+    restart: unless-stopped
