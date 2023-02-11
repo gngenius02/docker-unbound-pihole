@@ -2,7 +2,7 @@
 
 Usage:
 ```bash
-cd pihole-unbound
+cd dockerImage
 docker build -t unboundpihole .
 
 cd ..
