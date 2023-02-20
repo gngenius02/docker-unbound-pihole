@@ -2,6 +2,8 @@
 
 Usage:
 ```bash
+echo "WEBPASSWORD=CreateAPasswordHere" > .env
+
 cd dockerImage
 docker build -t unboundpihole .
 
